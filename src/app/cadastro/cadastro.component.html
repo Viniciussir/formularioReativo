@@ -14,13 +14,12 @@
         required
         minlength="2"
         #nome="ngModel">
+      <div *ngIf="nome?.invalid && nome?.touched || nome?.dirty">
+        <app-mensagem *ngIf="nome?.errors?.['required']" mensagem="O campo de nome deve ser preenchido."></app-mensagem>
+        <app-mensagem *ngIf="nome?.errors?.['minlength']" mensagem="O nome deve ter no mínimo 2 caracteres."></app-mensagem>
+      </div>
     </div>
 
-    <div *ngIf="nome?.invalid && nome?.touched || nome?.dirty">
-      <app-mensagem *ngIf="nome?.errors?.['required']" mensagem="O campo de nome deve ser preenchido."></app-mensagem>
-      <app-mensagem *ngIf="nome?.errors?.['minlength']" mensagem="O nome deve ter no mínimo 2 caracteres."></app-mensagem>
-    </div>
-   
     <div class="formulario__dupla">
       <div class="formulario__campo">
         <label class="campo__etiqueta" for="nascimento">Nascimento</label>
@@ -33,11 +32,10 @@
           required
           maiorIdadeValidator
           #nascimento="ngModel"/>
-      </div>
-
-      <div *ngIf="nascimento?.invalid && nascimento?.touched || nascimento?.dirty">
-        <app-mensagem *ngIf="nascimento?.errors?.['required']" mensagem="A data de nascimento deve ser preenchida."></app-mensagem>
-        <app-mensagem *ngIf="nascimento?.errors?.['maiorIdadeValidator']" mensagem="O usuário deve ter mais de 18 anos."></app-mensagem>
+        <div *ngIf="nascimento?.invalid && nascimento?.touched || nascimento?.dirty">
+          <app-mensagem *ngIf="nascimento?.errors?.['required']" mensagem="A data de nascimento deve ser preenchida."></app-mensagem>
+          <app-mensagem *ngIf="nascimento?.errors?.['maiorIdadeValidator']" mensagem="O usuário deve ter mais de 18 anos."></app-mensagem>
+        </div>
       </div>
 
       <div class="formulario__campo">
@@ -52,12 +50,11 @@
           required
           pattern="(\(?\d{2}\)?\s?)(\d{5}\-?\d{4})"
           #telefone="ngModel"/>
+        <div *ngIf="telefone?.invalid && telefone?.touched || telefone?.dirty">
+          <app-mensagem *ngIf="telefone?.errors?.['required']" mensagem="O campo de telefone deve ser preenchido."></app-mensagem>
+          <app-mensagem *ngIf="telefone?.errors?.['pattern']" mensagem="O campo de telefone está faltando algo."></app-mensagem>
+        </div>
       </div>
-    </div>
-
-    <div *ngIf="telefone?.invalid && telefone?.touched || telefone?.dirty">
-      <app-mensagem *ngIf="telefone?.errors?.['required']" mensagem="O campo de telefone deve ser preenchido."></app-mensagem>
-      <app-mensagem *ngIf="telefone?.errors?.['pattern']" mensagem="O campo de telefone está faltando algo."></app-mensagem>
     </div>
 
     <div class="formulario__campo">
@@ -71,11 +68,10 @@
         required
         pattern="^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$"
         #email="ngModel"/>
-    </div>
-
-    <div *ngIf="email?.invalid && email?.touched || email?.dirty">
-      <app-mensagem *ngIf="email?.errors?.['required']" mensagem="O campo de email deve ser preenchido."></app-mensagem>
-      <app-mensagem *ngIf="email?.errors?.['pattern']" mensagem="O campo de email deve seguir este padrão: 'exemplo@dominio.com'"></app-mensagem>
+      <div *ngIf="email?.invalid && email?.touched || email?.dirty">
+        <app-mensagem *ngIf="email?.errors?.['required']" mensagem="O campo de email deve ser preenchido."></app-mensagem>
+        <app-mensagem *ngIf="email?.errors?.['pattern']" mensagem="O campo de email deve seguir este padrão: 'exemplo@dominio.com'"></app-mensagem>
+      </div>
     </div>
 
     <h3 class="principal__subtitulo">Endereço</h3>
@@ -85,8 +81,15 @@
       <input 
         name="cep" 
         id="cep" 
-        class="campo__escrita" />
-      <div id="erro"></div>
+        class="campo__escrita"
+        ngModel
+        required
+        pattern="^(\d{5})(-?\d{3})$"
+        #cep="ngModel"/>
+      <div *ngIf="cep?.invalid && cep?.touched || cep?.dirty">
+        <app-mensagem *ngIf="cep?.errors?.['required']" mensagem="O campo de CEP é obrigatório"></app-mensagem>
+        <app-mensagem *ngIf="cep?.errors?.['pattern']" mensagem="O campo de CEP deve seguir este exemplo: 00000-000"></app-mensagem>
+      </div>
     </div>
 
     <div class="formulario__campo">
